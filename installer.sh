@@ -1,6 +1,6 @@
 #!/bin/bash
 # Easy TeamSpeak 3 installer for Debian based OS
-# Tested on Debian 7/8 and Ubuntu 14.04 LTS
+# Tested by bosscoder on Debian 7/8 and Ubuntu 14.04 LTS
 
 # Check for root account
 if [[ "$EUID" -ne 0 ]]; then
@@ -20,8 +20,27 @@ pvtip=$( ifconfig  | grep 'inet addr:'| grep -v '127.0.0*' | cut -d ':' -f2 | aw
 # Get the external public IP of the server
 pubip=$( wget -qO- http://ipinfo.io/ip )
 
+# Ask the user if they accept the teamspeak license
+read -p "Do you accept the Teamspeak License? [y/n]: " licensepermission
+while true; do
+  if [[ "$licensepermission" == "y" ]]; then
+    echo "You accepted the Teamspeak License."
+    echo "You can view the license by using: cat /opt/ts3/LICENSE"
+    break
+  elif ! [[ "$licensepermission" = "n" ]]; then
+    echo "Error: You did not accept the Teamspeak License. Quiting installation."
+    exit 2
+    break
+  else
+    break
+  fi
+done
+
+
+
 # Gives user the internal ip for reference and ask for desired ports
 echo "Your private internal IP is: $pvtip"
+echo "If you are installing this on a NAT VPS, use your assigned ports.
 read -p "Enter Voice Server port [9987]: " vport
 while true; do
   if [[ "$vport" == "" ]]; then
@@ -71,24 +90,14 @@ fi
 echo "-------------------------------------------------------"
 echo "Detecting latest TeamSpeak 3 version, please wait..."
 echo "-------------------------------------------------------"
-wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > TS3V
-while read ts3version; do
-  if [[ "${ts3version}" =~ ^[3-9]+\.[0-9]+\.1[2-9]+\.?[0-9]*$ ]]; then
-    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux_amd64-${ts3version}.tar.bz2
-  else
-    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux-amd64-${ts3version}.tar.gz
-  fi
-  if [[ $? == 0 ]]; then
-    break
-  fi
-done < TS3V
-rm -f TS3V
+ts3version=$(wget 'https://files.teamspeak-services.com/releases/server/' -q -O -  | grep -Eo '([0-9]{1,}\.)+[0-9]{1,}' | uniq | sort -r -V | head -n 1
+echo "Latest version found is: " $ts3version
 
 # Get OS Arch and download correct packages
 if [ "$(arch)" != 'x86_64' ]; then
-    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
+    wget "https://files.teamspeak-services.com/releases/server/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
 else
-    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
+    wget "https://files.teamspeak-services.com/releases/server/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
 fi
 
 # Install required packages
@@ -137,7 +146,7 @@ EOF
 chmod 755 /etc/init.d/teamspeak3
 
 # Assign right ports and password to TS3 server
-sed -i "s/{2}/{4} default_voice_port=$vport query_port=$qport filetransfer_port=$fport filetransfer_ip=0.0.0.0 serveradmin_password=$apass/" /opt/ts3/ts3server_startscript.sh
+sed -i 's/COMMANDLINE_PARAMETERS=""/COMMANDLINE_PARAMETERS="query_port='$qport' query_ip=0.0.0.0 default_voice_port='$vport' voice_ip=0.0.0.0 filetransfer_port='$fport' filetransfer_ip=0.0.0.0 serveradmin_password='$apass'"/' /opt/ts3/ts3server_startscript.sh
 
 # Set TS3 server to auto start on system boot
 update-rc.d teamspeak3 defaults
@@ -147,14 +156,23 @@ echo ""
 echo ""
 clear
 echo "TeamSpeak 3 has been successfully installed!"
+echo ""
+echo ""
+echo "Accepting the license..."
+touch /opt/ts3/.ts3server_license_accepted
+echo "Accepted license!"
+echo "Automatically configuring ports..."
 echo "Voice server is available at $pubip:$vport"
+echo ""
 echo "The file transfer port is: $fport"
 echo "The server query port is: $qport"
 echo ""
 read -p "Start the server now? [y/n]: " startopt
 sleep 1
 if [ "$startopt" == "y" ] || [ "$startopt" == "yes" ]; then
-  echo "Please keep the following details safe!"
+  echo "To find your private token to configure your server, use:"
+  echo "cd opt/ts3/logs"
+  echo "cat $(ls -t1 | tail -1)"
   sleep 2
   /etc/init.d/teamspeak3 start
 else
