@@ -21,26 +21,30 @@ If you need to upload your own license, you can upload your "licensekey.dat" to 
 
 ### Where do I get a server?
 This script will run on any vps server as long as it has root and ipv4 access. VPS with NAT'd IPv4 works just as well.<br />
-Get a cheap yearly VPS from one of these awesome providers, starting from $2 annually.
-##### <a href="https://clients.inceptionhosting.com/cart.php?gid=13&currency=3" target="_blank">Inception Hosting - as low as $2.25/year</a>
-* Dallas, US
+
+##### mrVM.net - as low as $4/year #####
+##### <a href="https://clients.mrvm.net/cart.php?gid=11" target="_blank">Europe</a>
 * Milan, IT
-* Tokyo, JP
-* Rotterdam, NL
-* Phoenix, US
-* Singapore, SG
-* Maidenhead, UK
+* Sofia, BG
+* Nuremberg, DE
+* Reihns, FR
+* Sandefjord,NO 
 
-##### <a href="https://clients.gestiondbi.com/index.php?/cart/lowendspirit-nat-vps/&step=0&currency=1" target="_blank">Deepnet Solutions - as low as $2.50/year</a>
-* Montreal, CA
-* New Jersey, US
-* Hong Kong, CN
-* Johannesburg, ZA
+##### <a href="https://clients.mrvm.net/cart.php?gid=19" target="_blank">America</a>
+* Kansas City, Missouri
+* Lenoir, Noth Carolina
+* Berkeley Springs, West Virgina 
+* Las Vegas, Nevada
+* Seattle, Washington
+* New York, New York
 
-##### <a href="https://secure.ransomit.com.au/console/cart.php?a=add&pid=104" target="_blank">RansomIT - as low as $4.50/year</a>
-* Sydney, AU
+##### <a href="https://clients.mrvm.net/cart.php?gid=20" target="_blank">Rest of the World</a>* 
+* Sydney, Australia
+* Perth, Australia
+* Singapore, Singapore
 
 ### More info please.
 This script uses init.d, no support for systemd, yet.<br />
-Tested on Debian 7 and Ubuntu 14.04 LTS<br />
-And don't laugh at my code.
+!! Not Tested yet !!<br />
+
+Forked from https://github.com/bosscoder/NAT-TS3-Installer
