@@ -1,5 +1,7 @@
 ## NAT TS3 Installer
-This installer will automatically install TeamSpeak 3 onto your NAT VPS, and automatically configure the ports to the ones you specify.
+This installer will automatically install the latest version of TeamSpeak 3 onto your NAT VPS, and automatically configure the ports to the ones you specify.
+
+It will also install dependency packages.
 
 ### How do I install?
 To install TeamSpeak 3 automatically, run this command and follow the prompt.
@@ -18,20 +20,21 @@ You can also set up SVR records with your dns provider so you can use your hostn
 
 ### Does my server have a license?
 No. Only the barebone server will be installed, no license will be included. You can, however, use the server as is for personal usage, up to 32 concurrent clients.<br />
-If you need to upload your own license, you can upload your "licensekey.dat" to ```/opt/ts3/``` and enter command ```/etc/init.d/teamspeak3 restart``` for the new license key to take effect.
+If you need to upload your own license, you can upload your "licensekey.dat" to ```/opt/ts3/``` and restart the service for the new license key to take effect.
 
 ### Where do I get a server?
 This script will run on any vps server as long as it has root and ipv4 access. VPS with NAT'd IPv4 works just as well.<br />
 
-##### mrVM.net - as low as $4/year #####
-##### <a href="https://clients.mrvm.net/cart.php?gid=11" target="_blank">Europe</a>
+##### mrVM.net - NAT VPS - as low as $4/year  #####
+
+##### <a href="https://clients.mrvm.net/cart.php?gid=11" target="_blank">Europe</a> #####
 * Milan, IT
 * Sofia, BG
 * Nuremberg, DE
 * Reihns, FR
 * Sandefjord,NO 
 
-##### <a href="https://clients.mrvm.net/cart.php?gid=19" target="_blank">America</a>
+##### <a href="https://clients.mrvm.net/cart.php?gid=19" target="_blank">America</a> #####
 * Kansas City, Missouri
 * Lenoir, Noth Carolina
 * Berkeley Springs, West Virgina 
@@ -39,7 +42,7 @@ This script will run on any vps server as long as it has root and ipv4 access. V
 * Seattle, Washington
 * New York, New York
 
-##### <a href="https://clients.mrvm.net/cart.php?gid=20" target="_blank">Rest of the World</a>* 
+##### <a href="https://clients.mrvm.net/cart.php?gid=20" target="_blank">Rest of the World</a> #####
 * Sydney, Australia
 * Perth, Australia
 * Singapore, Singapore
