@@ -6,7 +6,7 @@ It will also install dependency packages.
 ### How do I install?
 To install TeamSpeak 3 automatically, run this command and follow the prompt.
 
-``wget https://raw.githubusercontent.com/mikho/NAT-TS3-Installer/master/installer.sh --no-check-certificate -O /tmp/nat_ts3.sh && bash /tmp/nat_ts3.sh``
+``wget https://raw.githubusercontent.com/mikho/TS3-Installer/master/installer.sh --no-check-certificate -O /tmp/ts3installer.sh && bash /tmp/ts3installer.sh``
 
 ### Requirements
 Should work on both OpenVZ and KVM, as well as Dedicated. No promises :) 
