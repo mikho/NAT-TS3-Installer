@@ -1,7 +1,7 @@
 #!/bin/bash
 # Easy TeamSpeak 3 installer for Debian or CentOS based OS
 #
-#
+# By mikho - https://github.com/mikho/TS3-Installer
 # 
 
 # Check for root account
